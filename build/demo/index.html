@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>标签过滤案例</title>
+</head>
+<body>
+<h2>原html代码</h2>
+<div class='inner' style='background-color: red; color: #fff;'>
+	<h1 class='title'>HI，欢迎来到github！</h1>
+	<span>联系电话：<em style='color:yellow'>204191</em></span>
+	</br>
+	<a href=''>链接</a>
+</div>
+<h2>过滤效果</h2>
+<div id="parent1" style="color: #333;"></div>
+<div id="parent2" style="color: #666;"></div>
+<div id="parent3" style="color: #999;"></div>
+
+<script type="text/javascript">
+/**
+ * @description 去掉所有的html标记,并限制展示字数
+ * @example filterHtmlTag(htmlStr);
+ * @example filterHtmlTag(htmlStr,5);
+ * @example filterHtmlTag(htmlStr,5,true);
+ * @param {string} str 需要过滤标签的HTML字符串(必传)
+ * @param {int} len 需要展示的文本字数(非必传,不传则返回全部字符串)
+ * @param {boolean} ellipsis  值为ture时,文本最后追加"..."(非必传,默认false)
+ */ 
+function filterHtmlTag(str,len,ellipsis){
+	str=str.toString();
+	var txt=str.replace(/<[^>]+>/g,"");
+	if(len&&ellipsis){
+		return txt.substr(0,len)+"...";
+	}else if(len){
+		return txt.substr(0,len);
+	}else{
+		return txt;
+	}
+}
+
+var htmlStr="<div class='inner' style='background-color: red; height: 200px;color: #fff;'><h1 class='title'>HI，欢迎来到github！</h1><span>联系电话：<em style='color:yellow'>204191</em></span></br><a href=''>链接</a></div>";
+
+var parent1=document.getElementById("parent1");
+var parent2=document.getElementById("parent2");
+var parent3=document.getElementById("parent3");
+parent1.innerHTML=filterHtmlTag(htmlStr);
+parent2.innerHTML=filterHtmlTag(htmlStr,15);
+parent3.innerHTML=filterHtmlTag(htmlStr,10,true);
+
+
+/*localStorage*/
+if(!localStorage.onceAd){
+	alert(1);
+	localStorage.onceAd=true;
+}
+</script>
+</body>
+</html>
