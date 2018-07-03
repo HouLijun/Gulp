@@ -55,7 +55,6 @@ gulp.task('default', ['clean'], function() {
    gulp.start('fileinclude','common')
 });
 
-
 function gulpSingle(paths){
   del(['build/'+paths+'/**/*.*']).then();
   gulp.src(["dev/page/"+paths+"/*.html"])
@@ -75,6 +74,11 @@ function gulpSingle(paths){
       .pipe(gulp.dest('build/'+paths+'/images/'));//输出到build
   
 }
+function gulpWatchSingle(paths){
+	gulp.task("watchingSingle", function () {
+	    gulp.watch(['dev/page/'+paths+'/**/*.*'], ["single"]);
+	});
+}
 //命令行传参
 var knownOptions = {
   string: 'paths',
@@ -85,6 +89,11 @@ var options = minimist(process.argv.slice(2), knownOptions);
 
 gulp.task('single', function() {
 	gulpSingle(options.paths);	    
+});
+
+gulp.task("watchSingle", function () {
+	gulpWatchSingle(options.paths);	   
+	gulp.start('single','watchingSingle');
 });
 
 // gulp single --paths 2018/online_store/1.1
